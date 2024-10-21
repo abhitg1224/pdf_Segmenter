@@ -1,0 +1,12 @@
+# Ignore compiled Java classes
+*.class
+
+# Ignore JAR files
+*.jar
+
+# Ignore output folders
+output_segments/
+
+# Ignore PyCharm or VSCode configuration files
+.idea/
+.vscode/
