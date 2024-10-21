@@ -27,15 +27,6 @@
             <version>0.10.9.5</version>
         </dependency>
 
-        <!-- JUnit for testing (optional, if you have unit tests in Java) -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
     <build>
         <plugins>
             <!-- Compiler plugin to compile Java code -->
