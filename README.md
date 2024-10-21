@@ -2,99 +2,117 @@
 
 ## Project Overview
 
-This project is a **PDF Content Segmenter** developed using **iText** in **Java** and controlled via **Python** using **Py4J**. The application programmatically segments a system-generated PDF into distinct sections based on whitespace between blocks of text, making exactly `X` cuts. The goal is to identify logical sections such as headings, paragraphs, or distinct content blocks that are visually separated by significant whitespace.
+This project is a **PDF Content Segmenter** developed using **iText** in **Java** and controlled via **Python** using **Py4J**. The application segments a system-generated PDF into distinct sections based on the whitespace between blocks of text, making exactly `X` cuts. The goal is to identify logical sections, such as headings, paragraphs, or distinct content blocks, that are visually separated by increased whitespace without using image processing techniques.
 
 ---
 
 ## Technologies Used
 
-- **Python 3.7+**
 - **Java 8+**
-- **iText 7 (for PDF manipulation)**
-- **Py4J (to bridge Python and Java)**
+- **Maven** (for dependency management)
+- **iText 7** (for PDF manipulation)
+- **Py4J** (for Python-to-Java communication)
+- **Python 3.7+**
 
 ---
 
-## Setup Instructions
-
-### 1. Install Python Dependencies
-
-- You need to install the Py4J library, which allows communication between Python and Java.
-
-  **pip install py4j**
-
-
-### 2. Download the iText and Py4J JARs
-- iText JAR: Download the iText JAR.
-- Py4J JAR: Download the Py4J JAR.
-
-### 3. Compile the Java Code
-- Place the iText and Py4J JARs in the same directory as your Java code and compile the Java classes.
-
-  `javac -cp .:itext7-core.jar:py4j0.x.jar PDFSegmenter.java JavaServer.java`
-
-  This command compiles the Java classes and includes the iText and Py4J libraries in the classpath.
-
-### 4. Start the Py4J Java Gateway
-- Run the JavaServer class to start the Py4J gateway. This will allow the Python script to communicate with Java.
-
-  `java -cp .:itext7-core.jar:py4j0.x.jar JavaServer`
-
-  Once the gateway is running, it will wait for requests from the Python script.
 
 ---
 
-### How to Run the Application
+## Prerequisites
 
-### 1. Prepare Input Files
-Ensure that your input PDF file is available in the project directory (or provide the correct file path). The application will segment this PDF based on significant whitespace and output the segments into a specified folder.
+Before running the project, ensure you have the following installed:
 
-### 2. Run the Python Script
-The Python script pdf_segmenter.py acts as the controller and uses Py4J to invoke the Java-based PDF segmentation logic.
+1. **Java 8 or later**
+2. **Maven**: Download and install Maven from [here](https://maven.apache.org/install.html).
+3. **Python 3.7+**: You can download it from [python.org](https://www.python.org/downloads/).
 
-You can run the script as follows:
-**python pdf_segmenter.py**
+---
 
-By default, the script is configured to:
-Process a file named **input.pdf**.
+## Setting Up the Project
 
-Output the segmented PDFs in the **output_segments** folder.
-Make 3 cuts (producing 4 segments).
+### 1. Clone the Repository
 
-### 3. Specify Custom Parameters
-You can modify the script to process a different input file, output directory, or number of segments by passing those parameters directly:
+First, clone the repository from GitHub:
 
-input_pdf = 'your-input-file.pdf'  # Replace with your PDF file path
+`git clone https://github.com/your-username/pdf-segmenter.git`
 
-output_folder = 'your-output-folder'
+### 2. Install Maven Dependencies
+Maven will automatically download all the dependencies specified in the pom.xml file, including iText and Py4J.
 
-num_segments = 3  # Replace with desired number of segments
+Run the following command to download the dependencies and compile the Java code:
 
-If you want to change the number of segments, simply adjust the num_segments variable in the script.
+`mvn clean install`
+
+### 3. Install Python Dependencies
+
+The Python script relies on the Py4J library for communication with Java. Install Py4J for Python using pip:
+
+`pip install py4j`
+
+---
+
+### Running the Project
+
+- 1. Start the Java Server (Py4J Gateway)
+
+In order to allow Python to communicate with Java, you must first start the JavaServer that serves as the Py4J gateway.
+
+Run the following command from the project root to start the server:
+
+
+`mvn exec:java -Dexec.mainClass="com.example.JavaServer"`
+
+
+- 2. Run the Python Script
+
+After the Java server is up and running, you can run the Python script that performs the PDF segmentation.
+
+`python python/pdf_segmenter.py`
+
+
+This will:
+
+Connect to the JavaServer (via Py4J).
+
+Perform the PDF segmentation based on whitespace logic.
+
+Output the segmented PDFs to the specified directory.
 
 ---
 
 ### Example Usage
 
-- **Basic Example**
+- 1. Scenario: Segmenting a PDF Named **document.pdf**
+Let's assume you have a PDF file named document.pdf that you want to split into 4 segments based on the whitespace between content blocks.
 
-To segment a PDF named input.pdf into 3 segments, run the Python script like this:
+- 2. Modify the Python Script
 
-**python pdf_segmenter.py**
-
-The output will be saved in the output_segments folder as segment_1.pdf, segment_2.pdf, etc.
-
-- **Custom Example**
-
-If your input file is named document.pdf, and you want to segment it into 5 sections, modify the script like this:
+First, open the python/pdf_segmenter.py script and modify the following variables:
 
 
-input_pdf = 'document.pdf'
-output_folder = 'output_folder'
-num_segments = 5
+# Specify the input PDF file
+input_pdf = 'document.pdf'  # Path to the input PDF file
 
-Then run the script again:
-python pdf_segmenter.py
+# Specify the output folder where segmented PDFs will be saved
+output_folder = 'output_segments'
 
-This will create 5 segments of the input file and store them in the output_folder directory.
+# Set the number of segments (cuts) you want to make
+num_segments = 4  # This will create 4 segments
 
+- 3. Run the Python Script
+After modifying the script, run the Python script to trigger the segmentation process.
+
+`python python/pdf_segmenter.py`
+
+- 4. Expected Output
+
+The Python script will connect to the JavaServer via Py4J and perform the segmentation based on the significant whitespace found in document.pdf. The resulting segmented PDFs will be saved in the output_segments folder.
+
+Output Files:
+segment_1.pdf
+segment_2.pdf
+segment_3.pdf
+segment_4.pdf
+
+Each of these files will represent a section of the original document.pdf based on the largest whitespace found between content blocks.
