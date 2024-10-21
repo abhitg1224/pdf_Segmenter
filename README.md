@@ -87,15 +87,15 @@ Let's assume you have a PDF file named document.pdf that you want to split into 
 
 First, open the python/pdf_segmenter.py script and modify the following variables:
 
-Specify the input PDF file
+1. Specify the input PDF file
 
 input_pdf = 'document.pdf'  # Path to the input PDF file
 
-Specify the output folder where segmented PDFs will be saved
+2. Specify the output folder where segmented PDFs will be saved
 
 output_folder = 'output_segments'
 
-Set the number of segments (cuts) you want to make
+3. Set the number of segments (cuts) you want to make
 
 num_segments = 4  # This will create 4 segments
 
@@ -105,7 +105,7 @@ After modifying the script, run the Python script to trigger the segmentation pr
 
 `python python/pdf_segmenter.py`
 
-- 4. Expected Output
+- Expected Output
 
 The Python script will connect to the JavaServer via Py4J and perform the segmentation based on the significant whitespace found in document.pdf. The resulting segmented PDFs will be saved in the output_segments folder.
 
